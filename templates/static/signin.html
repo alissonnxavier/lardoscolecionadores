@@ -1,25 +1,30 @@
+{% include 'static/parciais/_head.html' %}
+{% include 'static/parciais/_nav.html' %}
+
+
+<div class="container d-flex flex-wrap justify-content-center p-3">
     <div class="w-50">
 
         <h1>Increver-se</h1>
 
 
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'signin' %}">
             {% csrf_token %}
 
             {% if msgv > 0 %}
-            <div class="alert {{ alert }}" role="alert">
+            <div class="alert {{ alert }} w-50" role="alert">
                 {{ msg }}
             </div>
             {% endif %}
 
 
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Nome</label>
+                <label for="inputEmail4" class="form-label">Usuario</label>
                 <input type="text" required class="form-control" id="inpytName" name="nome">
             </div>
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" required class="form-control" name="email" id="inputEmail4">
+                <input type="email" required class="form-control" name="email" value="{{ email }}" id="inputEmail4">
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Senha</label>
@@ -36,5 +41,7 @@
                 <button type="submit" class="btn btn-primary">Cadastrar-se</button>
             </div>
         </form>
-
     </div>
+</div>
+
+{% include 'static/parciais/_footer.html' %}
