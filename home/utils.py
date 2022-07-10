@@ -1,21 +1,16 @@
 
 
-def menssagens(alert, msg):
-
-    global contexto
+def menssagens(alert, msg, username='', email='', btn=0):
+    contexto = {}
 
     if int(len(msg) > 3):
-        contexto = {'alert': alert, 'msg': msg, 'msgv': 1}
+        contexto = {'alert': alert, 'msg': msg, 'username': username, 'email': email, 'btn': btn, 'msgv': 1}
 
         return contexto
     else:
         contexto['msgv'] = 0
+        return contexto
 
 
-def sumform(usuario, email, senha1, senha2):
-    contexto['usuario'] = usuario
-    contexto['email'] = email
-    contexto['senha1'] = senha1
-    contexto['senha2'] = senha2
 
 

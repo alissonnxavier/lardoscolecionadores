@@ -16,22 +16,26 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Usuario </label>
-                        <input type="text" name="user" class="form-control" id="exampleInputEmail1"
+                        <input type="text" name="user" required class="form-control" id="exampleInputEmail1"
                                aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                        <input type="password" required class="form-control" id="exampleInputPassword1" name="password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Entrar</button>
+                    <button type="submit" class="btn btn-outline-dark">Entrar</button>
+
                 </form>
             </div>
         </div>
-        <a href="{% url 'signin' %}">Inscrever-se</a>
+        <a href="{% url 'signin' %}"><div class="w-25 p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">
+  Isncrever-se
+</div></a>
+
     </div>
 
 </div>
 
 
-{% include 'static/parciais/_footer.html' %}
+{% include 'static/parciais/_scripts.html' %}

@@ -6,7 +6,7 @@ from .forms import ListaPessoa
 from .models import Pessoa
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .utils import menssagens, sumform
+from .utils import menssagens
 
 
 # Create your views here.
@@ -14,10 +14,18 @@ from .utils import menssagens, sumform
 
 class Home(ListView):
     template_name = 'static/index.html'
+    contexto = {}
 
     def get(self, request):
+        try:
+            if request.session['logado'] == True:
+                self.contexto['btn'] = 1
+            else:
+                self.contexto['btn'] = 0
+        except:
+            pass
 
-        return render(request, self.template_name)
+        return render(request, self.template_name, self.contexto)
 
 
 class About(ListView):
@@ -61,35 +69,57 @@ class Sair(ListView):
     def get(self, request):
         try:
             request.session.pop('logado')
+            request.session['logado'] = False
             return redirect('home')
         except:
             return redirect('home')
 
 
-class Signin(ListView):
+class Signin(View):
     template_name = 'static/signin.html'
     contexto = {}
 
     def get(self, request):
-        return render(request, self.template_name, self.contexto)
+        #User.objects.create_user('kjdfkjs','k@k.com','jksldfjkl')
+        return render(self.request, self.template_name, self.contexto)
 
     def post(self, request):
-
-        sumform(request.POST['nome'], request.POST['email'], request.POST['password1'], request.POST['password2'])
-
+        username = request.POST['nome']
+        email = request.POST['email']
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        retmail = 0
 
         try:
-            username = User.objects.get(username='renan')
-            email = User.objects.get(email='alisson@gmail.com')
-
+            email = User.objects.get(email=email)
             if email is not None:
-                self.contexto = menssagens('alert-danger', 'Este E-mail ja esta em uso')
-            else:
-                pass
-            if username is not None:
-                print('username em uso')
-                self.contexto = menssagens('alert-danger', 'Este usuario ja esta em uso, Porfavor escolha outro')
+                self.contexto = menssagens(alert='alert-danger', msg='Este E-mail ja esta em uso', username=username, email=email)
+                return render(self.request, self.template_name, self.contexto)
         except:
             pass
 
+        try:
+            username = User.objects.get(username=username)
+            if username is not None:
+                self.contexto = menssagens(alert='alert-danger', msg='Este nome de usuario ja existe', username=username, email=email)
+                return render(self.request, self.template_name, self.contexto)
+        except:
+            pass
+
+        try:
+            if pass1 != pass2:
+                self.contexto = menssagens(alert='alert-danger', msg='As senhas nao conferem', username=username, email=email)
+                return render(self.request, self.template_name, self.contexto)
+            else:
+                User.objects.create_user(username, email, pass1)
+                return redirect('login')
+
+        except:
+
+            pass
+
         return render(request, self.template_name, self.contexto)
+
+
+
+

@@ -3,9 +3,9 @@
 
 
 <div class="container d-flex flex-wrap justify-content-center p-3">
-    <div class="w-50">
+    <div class="w-50"><br>
 
-        <h1>Increver-se</h1>
+        <h1>Inscreva-se</h1><br>
 
 
         <form method="post" action="{% url 'signin' %}">
@@ -19,8 +19,8 @@
 
 
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Usuario</label>
-                <input type="text" required class="form-control" id="inpytName" name="nome">
+                <label for="inputEmail4" class="form-label">Escolha um Nome de usuario</label>
+                <input type="text" value="{{ username }}" required class="form-control" id="inpytName" name="nome">
             </div>
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Email</label>
@@ -38,10 +38,12 @@
 
 
             <div class="col-12">
-                <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+                <button type="submit" class="btn btn-outline-success">Cadastrar-se</button>
+                 <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-warning">Entrar</button>
             </div>
+
         </form>
     </div>
 </div>
 
-{% include 'static/parciais/_footer.html' %}
+{% include 'static/parciais/_scripts.html' %}
